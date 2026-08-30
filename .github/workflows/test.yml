@@ -32,8 +32,8 @@ jobs:
       - uses: ocaml/setup-ocaml@v3
         with:
           ocaml-compiler: ${{ matrix.ocaml-compiler }}
-      - name: Add this checkout as the Reuna repository
-        run: opam repository add reuna .
+      - name: Add the public Reuna repository
+        run: opam repository add reuna https://github.com/reuna-labs/opam-repository.git
       - name: Install the first-release package train
         run: |
           opam install --yes --assume-depexts \
