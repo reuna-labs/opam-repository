@@ -21,6 +21,12 @@ Then install only the protocol packages you need, for example:
 opam install solana cosmos tron
 ```
 
+The overlay version of the Digestif alpha is `1.4.0+reuna1`. The `+reuna1`
+suffix is intentional: unlike SemVer, opam orders `1.4.0~alpha1` below
+`1.4.0`, which would not satisfy the Web3 packages' `digestif >= 1.4.0`
+constraint. Both overlay versions point at the same immutable
+`v1.4.0-alpha1` source archive.
+
 These are alpha packages. They are not audited, and live signing should remain
 policy-gated with low-value testnet accounts.
 
@@ -29,4 +35,3 @@ policy-gated with low-value testnet accounts.
 `tools/import-release.sh` imports every opam package in one tagged repository,
 removes source-only pin metadata, and attaches archive checksums. Run
 `tools/check.sh` before publishing changes.
-

@@ -1,0 +1,52 @@
+name: Validate overlay
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  metadata:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ocaml/setup-ocaml@v3
+        with:
+          ocaml-compiler: 4.14.2
+      - name: Check package metadata and dependency cycles
+        run: ./tools/check.sh
+
+  install:
+    strategy:
+      fail-fast: false
+      matrix:
+        ocaml-compiler:
+          - 4.14.2
+          - 5.2.1
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ocaml/setup-ocaml@v3
+        with:
+          ocaml-compiler: ${{ matrix.ocaml-compiler }}
+      - name: Add this checkout as the Reuna repository
+        run: opam repository add reuna .
+      - name: Install the first-release package train
+        run: |
+          opam install --yes --assume-depexts \
+            digestif.1.4.0+reuna1 \
+            mirage-crypto.2.4.2~reuna1 \
+            grpc.0.2.1~alpha1 \
+            evm.0.2.0~alpha1 \
+            web3-codec.0.1.0~alpha1 \
+            bitcoin.4.0.0~alpha1 \
+            mpc-unix.0.1.0~alpha1 \
+            cometbft-unix.0.1.0~alpha2 \
+            solana-rpc-unix.0.1.0~alpha1 \
+            ton-light-client.0.1.0~alpha2 \
+            cardano-rpc-unix.0.1.0~alpha2 \
+            cosmos-rpc-unix.0.1.0~alpha1 \
+            tron-rpc-unix.0.1.0~alpha2
