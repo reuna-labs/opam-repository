@@ -48,5 +48,5 @@ jobs:
             solana-rpc-unix.0.1.0~alpha1 \
             ton-light-client.0.1.0~alpha2 \
             cardano-rpc-unix.0.1.0~alpha2 \
-            cosmos-rpc-unix.0.1.0~alpha1 \
+            cosmos-rpc-unix.0.1.0~alpha2 \
             tron-rpc-unix.0.1.0~alpha2
