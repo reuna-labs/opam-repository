@@ -1,0 +1,74 @@
+opam-version: "2.0"
+name:         "digestif"
+maintainer:   [ "Eyyüb Sari <eyyub.sari@epitech.eu>"
+                "Romain Calascibetta <romain.calascibetta@gmail.com>" ]
+authors:      [ "Eyyüb Sari <eyyub.sari@epitech.eu>"
+                "Romain Calascibetta <romain.calascibetta@gmail.com>" ]
+homepage:     "https://github.com/mirage/digestif"
+bug-reports:  "https://github.com/mirage/digestif/issues"
+dev-repo:     "git+https://github.com/mirage/digestif.git"
+doc:          "https://mirage.github.io/digestif/"
+license:      "MIT"
+synopsis:     "Hashes implementations (SHA*, Keccak, SHAKE, RIPEMD160, BLAKE2* and MD5)"
+description: """
+Digestif is a toolbox to provide hashes implementations in C and OCaml.
+
+It uses the linking trick and user can decide at the end to use the C implementation or the OCaml implementation.
+
+We provides implementation of:
+ * MD5
+ * SHA1
+ * SHA224
+ * SHA256
+ * SHA384
+ * SHA512
+ * SHA512/224
+ * SHA512/256
+ * SHA3
+ * Keccak-224
+ * Keccak-256
+ * Keccak-384
+ * Keccak-512
+ * SHAKE128
+ * SHAKE256
+ * WHIRLPOOL
+ * BLAKE2B
+ * BLAKE2S
+ * RIPEMD160
+"""
+
+build: [
+  [ "dune" "build" "-p" name "-j" jobs ]
+  [ "dune" "runtest" "-p" name "-j" jobs ] {with-test}
+]
+install:  [
+  [ "dune" "install" "-p" name ] {with-test}
+]
+
+depends: [
+  "ocaml"           {>= "4.08.0"}
+  "dune"            {>= "2.6.0"}
+  "eqaf"
+  "fmt"             {with-test & >= "0.8.7"}
+  "alcotest"        {with-test}
+  "bos"             {with-test}
+  "astring"         {with-test}
+  "fpath"           {with-test}
+  "rresult"         {with-test}
+  "ocamlfind"       {with-test}
+  "crowbar"         {with-test}
+]
+
+conflicts: [
+  "mirage-xen" {< "6.0.0"}
+  "ocaml-freestanding"
+]
+x-maintenance-intent: [ "(latest)" ]
+
+url {
+  src: "https://github.com/reuna-labs/digestif/archive/refs/tags/v1.4.0-alpha1.tar.gz"
+  checksum: [
+    "sha256=3985774d2bed029d99152bb3e819bee1e569f89e381074b9e5bc86afadfab29a"
+    "sha512=aaa1213182c77bb0a3069d9c8209315092cb955afaccf8adf3e8300068edf3a0f470d5b357d53c7c9e3dad1b6ad7e1b107b86e7c2428e3e6085e4bb0e8a2599f"
+  ]
+}

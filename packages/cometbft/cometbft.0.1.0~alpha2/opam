@@ -1,0 +1,47 @@
+opam-version: "2.0"
+synopsis: "ABCI 2.0 protocol core for CometBFT applications, free of I/O"
+description: """
+The transport-independent half of the OCaml CometBFT SDK:
+
+  * Varint / Framing -- the length-delimited socket codec (uvarint length
+    prefix followed by a marshalled Request/Response), as an incremental
+    Cstruct state machine with no I/O of its own.
+  * App -- a module type with one function per application-implemented ABCI
+    method, functorised over an IO monad, plus a Default functor supplying
+    spec-compliant no-op answers so an application overrides only what it
+    needs.
+  * Dispatch -- routing from a decoded Request to the right App function.
+
+Nothing here performs I/O or picks a scheduler, so the same core drives the
+Unix, Lwt and MirageOS adapters, and can be tested with the identity monad
+without a scheduler at all.
+"""
+maintainer: ["gilbahat"]
+authors: ["gilbahat"]
+license: "ISC"
+homepage: "https://github.com/reuna-labs/ocaml-cometbft"
+bug-reports: "https://github.com/reuna-labs/ocaml-cometbft/issues"
+dev-repo: "git+https://github.com/reuna-labs/ocaml-cometbft.git"
+depends: [
+  "ocaml" {>= "4.14"}
+  "dune" {>= "3.0"}
+  "cometbft-proto" {= version}
+  "cstruct" {>= "6.0.0"}
+  "logs"
+  "fmt"
+  "alcotest" {with-test}
+]
+build: [["dune" "build" "-p" name "-j" jobs]]
+
+# opam does not apply pin-depends transitively: pinning cometbft does not pin
+# what cometbft's own pin-depends name. So each package names its whole sibling
+# closure, not just its direct edges, or resolution fails with
+#   cometbft -> cometbft-proto unknown package
+
+url {
+  src: "https://github.com/reuna-labs/ocaml-cometbft/archive/refs/tags/v0.1.0-alpha2.tar.gz"
+  checksum: [
+    "sha256=09d0f30ca03addf04fb9ea83e6db633bc02a7059a5b418c1414bb8bf2b168098"
+    "sha512=fdf5caafa4c8d7d00afa27e370992c054281119225a2311f6dd69e1a807c1527d0951295588a01a9602ce06d6a9abac12e55861b5807a51c38f34018aa1481c9"
+  ]
+}

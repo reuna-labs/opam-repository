@@ -34,6 +34,12 @@ for source_opam in "$source_dir"/$package_glob; do
   # published repository metadata because every sibling is imported here.
   awk '
     /^version:[[:space:]]/ { next }
+    # Multi-package dune projects often leave tests unassigned to an opam
+    # package. Running the generated global @runtest alias while installing
+    # one subpackage then requires siblings that are not installed yet. The
+    # tagged repositories run their complete suites in CI; overlay installs
+    # build the package-scoped @install target only.
+    /^[[:space:]]*"@runtest"[[:space:]]*\{with-test\}[[:space:]]*$/ { next }
     /^pin-depends:[[:space:]]*\[/ { skipping = 1; next }
     skipping && /^\][[:space:]]*$/ { skipping = 0; next }
     skipping { next }
@@ -56,4 +62,3 @@ if [ "$found" != true ]; then
   echo "no packages matched $package_glob in $repository@$tag" >&2
   exit 1
 fi
-

@@ -1,0 +1,41 @@
+opam-version: "2.0"
+homepage:     "https://github.com/mirage/mirage-crypto"
+dev-repo:     "git+https://github.com/mirage/mirage-crypto.git"
+bug-reports:  "https://github.com/mirage/mirage-crypto/issues"
+doc:          "https://mirage.github.io/mirage-crypto/doc"
+authors:      ["David Kaloper <dk505@cam.ac.uk>" "Hannes Mehnert <hannes@mehnert.org>" ]
+maintainer:   "Hannes Mehnert <hannes@mehnert.org>"
+license:      "ISC"
+synopsis:     "Kerberos/GSS-API cipher suites for mirage-crypto"
+
+build: [ ["dune" "subst"] {dev}
+         ["dune" "build" "-p" name "-j" jobs ]
+         ["dune" "runtest" "-p" name "-j" jobs] {with-test} ]
+
+depends: [
+  "ocaml" {>= "4.13.0"}
+  "dune" {>= "2.7"}
+  "mirage-crypto" {=version}
+  "mirage-crypto-rng" {=version}
+  "digestif" {>= "1.1.4"}
+  "eqaf" {>= "0.8"}
+  "ounit2" {with-test}
+  "ohex" {with-test & >= "0.2.0"}
+]
+description: """
+Mirage-crypto-kerberos provides Kerberos 5 and GSS-API cipher suites:
+RFC 3962 (AES-CTS with HMAC-SHA1) and RFC 8009 (AES-CTS with HMAC-SHA256/384).
+
+Legacy etypes (3DES etype 16 and RC4-HMAC etypes 23/24) are in the separate
+mirage-crypto-kerberos-legacy package; add that dependency only when you need
+to interoperate with older Kerberos deployments.
+"""
+x-maintenance-intent: [ "(latest)" ]
+
+url {
+  src: "https://github.com/reuna-labs/mirage-crypto/archive/refs/tags/v2.4.0-reuna1.tar.gz"
+  checksum: [
+    "sha256=9a205da3582ae07c006a3f7711afdd8d02a284f5ed96c9b84e685a4a5e3bd44b"
+    "sha512=b02287dca8e795b25b7e474727dced9fb6582c6a7d587c7c7f56ab5b46163353a814d6bc241c262738d45af1aebf1cea3e51e0b75421c3616c831015c72c8575"
+  ]
+}
