@@ -30,6 +30,15 @@ constraint. Both overlay versions point at the same immutable
 These are alpha packages. They are not audited, and live signing should remain
 policy-gated with low-value testnet accounts.
 
+The exact 13-root train, archive URLs and checksums are recorded in
+[`release/first-release.lock`](release/first-release.lock). CI installs directly
+from that lock and then builds [`consumer/`](consumer/) outside every source
+tree against installed artifacts on OCaml 4.14.2, 5.2.1 and 5.5.0.
+
+Security reports belong at `security@reuna.io`, not in a public issue. See
+[`SECURITY.md`](SECURITY.md) and the defensive
+[`review plan`](security/review-plan.md).
+
 ## Maintenance
 
 `tools/import-release.sh` imports every opam package in one tagged repository,

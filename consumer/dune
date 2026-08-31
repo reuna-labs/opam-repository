@@ -1,0 +1,16 @@
+(executable
+ (name main)
+ (libraries
+  digestif
+  mirage-crypto
+  grpc
+  evm
+  web3-codec
+  bitcoin
+  mpc-unix
+  cometbft-unix
+  solana-rpc-unix
+  ton-light-client
+  cardano-rpc-unix
+  cosmos-rpc-unix
+  tron-rpc-unix))
